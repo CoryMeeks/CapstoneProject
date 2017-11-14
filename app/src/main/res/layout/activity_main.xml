@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cory.capstone.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:id="@+id/TopMenuBar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:id="@+id/profile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/home"
+            android:onClick="onClickShowProfile" />
+
+        <Button
+            android:id="@+id/setings"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/settings"
+            android:onClick="onClickShowSettings" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/TopMenuBar" />
+
+    <Button
+        android:id="@+id/findevent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="onClickOpenEvents"
+        android:text="Find an Event!"
+        android:layout_marginStart="18dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/findvenue"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="onClickOpenVenues"
+        android:text="Find a Gig!"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp" />
+
+    <Button
+        android:id="@+id/findtalent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="onClickOpenTalent"
+        android:text="Find an Act!"
+        android:layout_marginStart="26dp"
+        android:layout_below="@+id/textView3"
+        android:layout_toEndOf="@+id/findevent" />
+</RelativeLayout>
