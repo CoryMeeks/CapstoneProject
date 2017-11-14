@@ -3,9 +3,11 @@ package com.example.cory.capstone;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.BoolRes;
+import android.support.v4.app.Fragment;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,91 +24,268 @@ import java.sql.Statement;
  * Simple database connection class.
  */
 
-public class Connect {
-    String ip = "216.15.165.85.";
-    String classs = "net.sourceforge.jtds.jdbc.Driver";
-    String db = "Msis4363";
-    String un = "Msis4363";
-    String password = "Msis4363";
+public class Connect extends Fragment {
     String msg = "";
     Boolean isSuccess;
 
     public final static String Extra_String = "com.example.cory.capstone.Extra";
 
     @SuppressLint("NewApi")
-    public Connection connectionClass(String user, String pass, String db, String server) {
+    public Connection connectionClass() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        Connection connection = null;
-        String ConnectionURL = null;
+        Connection con = null;
 
         try {
-            Class.forName(classs);
-            ConnectionURL = "jdbc:jtds:sqlserver://" + server + db + ";user=" + user + ";password=" + pass + ";";
-            connection = DriverManager.getConnection(ConnectionURL);
+            Class.forName("net.sourceforge.jtds.jdbc.Driver");
+            String connectionURL = "jdbc:jtds:sqlserver://sql11.ezhostingserver.com;DatabaseName=Msis4363;user=Msis4363;password=Msis4363;";
+            con = DriverManager.getConnection(connectionURL);
         } catch (SQLException se) {
-            Log.e("ERR", se.getMessage());
+            Log.e("SE-ERR", se.getMessage());
         } catch (ClassNotFoundException ce) {
-            Log.e("ERR", ce.getMessage());
+            Log.e("CE-ERR", ce.getMessage());
         } catch (Exception e) {
-            Log.e("ERR", e.getMessage());
+            Log.e("E-ERR", e.getMessage());
         }
-        return connection;
+        return con;
     }
 
-    public Boolean tryPass (String username) {
-        Connection con = connectionClass(un, password, db, ip);
-        if(con == null) {
-            msg = "Check your Internet connection";
-        } else {
-            String query = "select colUserPassword from tblUser where colUserName = '" + username + "';";
-            try{
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
-                if(rs.next()) {
-                    msg = "Login successful!";
-                    isSuccess = true;
-                    con.close();
-                } else {
-                    msg = "Invalid credentials";
-                    isSuccess = false;
-                }
-            } catch (SQLException se) {
-                Log.e("ERR", se.getMessage());
+    public class setUser extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (isSuccess) {
+
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         }
-        return isSuccess;
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                Connection con = connectionClass();
+                if (con == null) {
+                    msg = "Check your Internet connection";
+                } else {
+                    String query = "INSERT INTO tblUser (colUserName, colUserFirstName, colUserLastName, colUserPassword) VALUES('"+params[0]+"', '"+params[1]+"', '"+params[2]+"', '"+params[3]+"');";
+                    PreparedStatement stmt = con.prepareStatement(query);
+                    ResultSet rs = stmt.executeQuery();
+                    if (rs.next()) {
+                        stmt.close();
+                        isSuccess = true;
+                    } else {
+                        isSuccess = false;
+                    }
+                    con.close();
+                }
+            } catch (SQLException se) {
+                Log.e("SE-ERR", se.getMessage());
+            } catch (Exception e) {
+                isSuccess = false;
+                msg = e.getMessage();
+                Log.e("E-ERR", e.getMessage());
+            }
+
+            return msg;
+        }
+
     }
 
-    public void setUser (String username, String firstname, String lastname, String password) {
-        Connection con = connectionClass(un, password, db, ip);
-        if(con == null) {
-            msg = "Check your Internet connection";
-        } else {
-            String query = "insert into dbo.tblUser(colUserName, colFirstName, colLastName, colPassword) values('"+username+"','"+firstname+"','"+lastname+"','"+password+"');";
+    public class setEvent extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (isSuccess) {
+
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            /* TODO */
+            return msg;
+        }
+
+    }
+
+    public class setVenue extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (isSuccess) {
+
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            /* TODO */
+            return msg;
+        }
+
+    }
+
+    public class setTalent extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (isSuccess) {
+
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            /* TODO */
+            return msg;
+        }
+
+    }
+
+    public class getExistingUser extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (isSuccess) {
+
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
             try {
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
-                if (rs.next()) {
-                    msg = "You've successfully registered!";
+                Connection con = connectionClass();
+                if (con == null) {
+                    msg = "Check your Internet connection";
+                } else {
+                    String query = "SELECT colUserId FROM tblUser WHERE colUserName LIKE '" + params[0] + "';";
+                    PreparedStatement stmt = con.prepareStatement(query);
+                    ResultSet rs = stmt.executeQuery();
+                    int userId;
+                    if (rs.next()) {
+                        userId = rs.getInt("colUserID");
+                        stmt.close();
+                        if (userId > 0) {
+                            msg = "This user already exists";
+                            isSuccess = false;
+                        }
+                    } else {
+                        isSuccess = true;
+                    }
+                    con.close();
+                }
+            } catch (SQLException se) {
+                Log.e("SE-ERR", se.getMessage());
+            } catch (Exception e) {
+                isSuccess = false;
+                msg = e.getMessage();
+                Log.e("E-ERR", e.getMessage());
+            }
+
+            return msg;
+        }
+    }
+
+    public class getUser extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (isSuccess) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                Connection con = connectionClass();
+                if (con == null) {
+                    msg = "Check your Internet connection";
+                } else {
+                    String query = "SELECT colUserID FROM tblUser WHERE colUserName LIKE '" + params[0] + "' AND colUserPassword LIKE '" + params[1] + "'";
+                    PreparedStatement stmt = con.prepareStatement(query);
+                    ResultSet rs = stmt.executeQuery();
+                    int userId;
+                    String userName = "";
+                    if (rs.next()) {
+                        userId = rs.getInt("colUserID");
+                        stmt.close();
+                        if (userId > 0) {
+                            //Successful login
+                            String doublecheck = "SELECT colUserName FROM tblUser WHERE colUserID = " + userId;
+                            PreparedStatement secstmt = con.prepareStatement(doublecheck);
+                            ResultSet dblchk = secstmt.executeQuery();
+                            if(dblchk.next()) {
+                                userName = dblchk.getString("colUserName");
+                            } else {
+                                Log.e("ERR", "Login double check unsuccessful");
+                            }
+                            dblchk.close();
+                            isSuccess = true;
+                        } else {
+                            Log.e("ERR", "Login query unsuccessful");
+                        }
+                    } else {
+                        msg = "Login incorrect";
+                    }
+                    con.close();
                 }
             } catch (SQLException se) {
                 Log.e("ERR", se.getMessage());
             } catch (Exception e) {
+                isSuccess = false;
+                msg = e.getMessage();
                 Log.e("ERR", e.getMessage());
             }
+
+            return msg;
         }
     }
 
-    public void setEvent () {
+    /* TODO
+     * public class getEvent extends AsyncTask<String, String, String> {}
+     * public class getTalent extends AsyncTask<String, String, String> {}
+     * public class getVenue extends AsyncTask<String, String, String> {}
+     */
 
-    }
-
-    public void setVenue () {
-
-    }
-
-    public void setTalent () {
-
-    }
 }
