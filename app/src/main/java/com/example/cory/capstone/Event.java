@@ -9,9 +9,6 @@ import java.util.ArrayList;
 
 public class Event extends AppCompatActivity {
 
-    private ArrayList<String> arrayListToDo;
-    private ArrayAdapter<String> arrayAdapterToDo;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
