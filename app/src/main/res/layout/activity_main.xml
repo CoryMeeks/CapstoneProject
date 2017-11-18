@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -50,11 +49,11 @@
         android:id="@+id/findvenue"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:onClick="onClickOpenVenues"
-        android:text="Find a Gig!"
         android:layout_below="@+id/textView3"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@+id/findtalent"
+        android:onClick="onClickOpenVenues"
+        android:text="Find a Gig!" />
 
     <Button
         android:id="@+id/findtalent"
