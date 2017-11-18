@@ -13,10 +13,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void onClickShowMenu() {
-
-    }
-
     public void onClickOpenEvents(View v) {
         Intent i = new Intent(getApplicationContext(), Event.class);
         startActivity(i);
