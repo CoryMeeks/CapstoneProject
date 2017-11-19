@@ -95,7 +95,7 @@ public class Login extends AppCompatActivity {
                 if (con == null) {
                     msg = "Check your Internet connection";
                 } else {
-                    String query = "SELECT colUserID FROM tblUser WHERE colUserName LIKE '" + params[0] + "' AND colUserPassword LIKE '" + params[1] + "'";
+                    String query = "SELECT colUserID FROM tblUser WHERE colUserName = '" + params[0] + "' AND colUserPassword = '" + params[1] + "'";
                     PreparedStatement stmt = con.prepareStatement(query);
                     ResultSet rs = stmt.executeQuery();
                     int userId;

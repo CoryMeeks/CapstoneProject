@@ -1,15 +1,19 @@
 package com.example.cory.capstone;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Connection;
@@ -20,6 +24,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.order;
+import static com.example.cory.capstone.R.id.lv_venue;
 
 public class Venue extends AppCompatActivity {
 
@@ -35,8 +42,8 @@ public class Venue extends AppCompatActivity {
 
         content = new ArrayList<>();
         //Gets dynamic XML from row.xml and the tv_description ID, and passes it to content Array
-        contentadapter = new ArrayAdapter<>(this, R.layout.row, R.id.tv_description, content);
-        final ListView lv = (ListView) findViewById(R.id.lv_venue);
+        contentadapter = new ArrayAdapter<>(this, R.layout.row, R.id.tv_venuename, content);
+        final ListView lv = (ListView) findViewById(lv_venue);
         lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); //Defines the ListView as dynamic
         lv.setAdapter(contentadapter); //Defines adapter to use
 
@@ -64,7 +71,7 @@ public class Venue extends AppCompatActivity {
         return con;
     }
 
-    public class GetData extends AsyncTask<String, String, String> {
+    public class GetData extends AsyncTask<String, String, ArrayList<String>> {
         String msg = "";
         Boolean isSuccess = false;
 
@@ -74,12 +81,7 @@ public class Venue extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            //do something
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
+        protected ArrayList<String> doInBackground(String... params) {
             try {
                 Connection con = connectionClass();
                 if (con == null) {
@@ -95,6 +97,7 @@ public class Venue extends AppCompatActivity {
                         while (rs.next()) {
                             content.add(rs.getString("colVenueDesc"));
                         }
+                        msg = "Something to display";
                         isSuccess = true;
                     } else {
                         msg = "Nothing to display";
@@ -110,7 +113,18 @@ public class Venue extends AppCompatActivity {
                 Log.e("E-ERR", e.getMessage());
             }
 
-            return msg;
+            return content;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> r) {
+            if (isSuccess) {
+                //do something
+
+                Toast.makeText(Venue.this, msg, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(Venue.this, msg, Toast.LENGTH_SHORT).show();
+            }
         }
 
     }
