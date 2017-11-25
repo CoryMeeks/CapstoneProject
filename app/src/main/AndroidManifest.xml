@@ -43,7 +43,11 @@
 
         <activity
             android:name=".VenueDetailMap"
-            android:label="@string/title_activity_venue_detail_map"></activity>
+            android:label="@string/title_activity_venue_detail_map" />
+        <activity android:name=".TalentDetail" />
+        <activity
+            android:name=".EventDetail"
+            android:label="@string/title_activity_event_detail"></activity>
     </application>
 
 </manifest>

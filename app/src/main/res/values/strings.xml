@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Capstone</string>
     <string name="title_activity_venue_detail_map">Map</string>
+    <string name="title_activity_event_detail">Map</string>
 </resources>

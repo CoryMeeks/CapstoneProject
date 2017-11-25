@@ -13,24 +13,31 @@
         android:paddingRight="10dp" />
 
     <TextView
-        android:id="@+id/tv_venuename"
+        android:id="@+id/tv_eventname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/iv_thumbnail"
-        android:onClick="onClickVenueDetails"
-        android:paddingBottom="15dp"
-        android:text=""
+        android:paddingBottom="5dp"
+        android:text="text"
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/tv_address"
+        android:id="@+id/tv_eventaddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:layout_toRightOf="@id/tv_venuename"
-        android:paddingBottom="15dp"
-        android:text="" />
+        android:layout_toRightOf="@id/tv_eventname"
+        android:paddingBottom="10dp"
+        android:text="text" />
+
+    <TextView android:id="@+id/tv_eventdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv_thumbnail"
+        android:layout_below="@id/tv_eventname"
+        android:layout_marginLeft="5dp"
+        android:text="text"/>
 
 </RelativeLayout>

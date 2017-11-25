@@ -1,41 +1,41 @@
 package com.example.cory.capstone;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.SupportMapFragment;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Venue extends AppCompatActivity {
+import static com.example.cory.capstone.Talent.EXTRA_TALENT_NAME;
+import static com.example.cory.capstone.Venue.EXTRA_VENUE_NAME;
 
-    static final String EXTRA_VENUE_NAME = "com.example.cory.capstone.EXTRA_VENUE_NAME";
+public class TalentDetail extends AppCompatActivity {
 
-    private ListView lvContent;
-    private List<RowItem> content;
-    private CustomAdapter contentadapter;
+    String value;
+    String msg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_venue);
+        setContentView(R.layout.activity_venue_detail);
 
-        lvContent = (ListView) findViewById(R.id.lv_venue);
-        content = new ArrayList<>();
+        //Checks whether intent data got properly sent over
+        Bundle extras = getIntent().getExtras();
+
+        if(extras != null) {
+            value = extras.getString(EXTRA_TALENT_NAME);
+        } else msg = "Nothing passed";
 
         GetData pullcontent = new GetData();
         pullcontent.execute();
@@ -62,7 +62,9 @@ public class Venue extends AppCompatActivity {
     }
 
     public class GetData extends AsyncTask<String, String, String> {
-        String msg = "";
+        String strtalentdetailname;
+        String strtalentdetailprice;
+        String strtalentdetaildesc;
         Boolean isSuccess = false;
 
         @Override
@@ -77,21 +79,16 @@ public class Venue extends AppCompatActivity {
                 if (con == null) {
                     msg = "Check your Internet connection";
                 } else {
-                    String query = "SELECT colVenueID, colVenueName, colVenueLocation, " +
-                            "colVenueDesc FROM tblVenue;";
+                    String query = "SELECT colTalentName, colTalentAskingRate, colTalentDesc FROM tblTalent WHERE colTalentID = '"+value+"';";
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
 
-                    content.clear();
-
                     if (rs.next()) {
-                        while (rs.next()) {
-                            content.add(new RowItem(rs.getInt("colVenueID"),
-                                    rs.getString("colVenueName"),
-                                    rs.getString("colVenueLocation"),
-                                    rs.getString("colVenueDesc")));
-                        }
-                        msg = "Something to display";
+                        //do something
+                        strtalentdetailname = rs.getString("colTalentName");
+                        strtalentdetailprice = rs.getString("colTalentAskingRate");
+                        strtalentdetaildesc = rs.getString("colTalentDesc");
+
                         isSuccess = true;
                     } else {
                         msg = "Nothing to display";
@@ -114,23 +111,15 @@ public class Venue extends AppCompatActivity {
         protected void onPostExecute(String r) {
             if (isSuccess) {
                 //do something
-                contentadapter = new CustomAdapter(getApplicationContext(), content);
-                lvContent.setAdapter(contentadapter);
+                TextView talentdetailname = (TextView) findViewById(R.id.tv_venuedetailname);
+                TextView talentdetailprice = (TextView) findViewById(R.id.tv_venuedetailaddress);
+                TextView talentdetaildesc = (TextView) findViewById(R.id.tv_venuedetaildesc);
 
-                lvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Intent intent = new Intent(getApplicationContext(), VenueDetailMap.class);
-                        intent.putExtra(EXTRA_VENUE_NAME, view.getTag().toString());
-
-                        if(intent.resolveActivity(getPackageManager()) != null) {
-                            startActivity(intent);
-                        }
-                    }
-                });
-                //Toast.makeText(Venue.this, msg, Toast.LENGTH_SHORT).show();
+                talentdetailname.setText(strtalentdetailname);
+                talentdetailprice.setText(strtalentdetailprice);
+                talentdetaildesc.setText(strtalentdetaildesc);
             } else {
-                Toast.makeText(Venue.this, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         }
     }

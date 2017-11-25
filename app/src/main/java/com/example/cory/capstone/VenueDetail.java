@@ -65,7 +65,7 @@ public class VenueDetail extends FragmentActivity implements OnMapReadyCallback 
 
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            String connectionURL = "jdbc:jtds:sqlserver://sql11.ezhostingserver.com;DatabaseName=Msis4363;user=Msis4363;password=Msis4363;";
+            String connectionURL = "jdbc:jtds:sqlserver://sql11.ezhostingserver.com;DatabaseName=Msis4363new;user=Msis4363new;password=Msis4363;";
             con = DriverManager.getConnection(connectionURL);
         } catch (SQLException se) {
             Log.e("SE-ERR", se.getMessage());

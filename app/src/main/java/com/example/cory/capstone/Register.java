@@ -34,7 +34,7 @@ public class Register extends AppCompatActivity {
 
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            String connectionURL = "jdbc:jtds:sqlserver://sql11.ezhostingserver.com;DatabaseName=Msis4363;user=Msis4363;password=Msis4363;";
+            String connectionURL = "jdbc:jtds:sqlserver://sql11.ezhostingserver.com;DatabaseName=Msis4363new;user=Msis4363new;password=Msis4363;";
             con = DriverManager.getConnection(connectionURL);
         } catch (SQLException se) {
             Log.e("SE-ERR", se.getMessage());
@@ -73,7 +73,7 @@ public class Register extends AppCompatActivity {
                 if (con == null) {
                     msg = "Check your Internet connection";
                 } else {
-                    String query = "SELECT colUserId FROM tblUser WHERE colUserName LIKE '" + params[0] + "';";
+                    String query = "SELECT colUserId FROM tblUser WHERE colUserName = '" + params[0] + "';";
                     PreparedStatement stmt = con.prepareStatement(query);
                     ResultSet rs = stmt.executeQuery();
                     int userId;

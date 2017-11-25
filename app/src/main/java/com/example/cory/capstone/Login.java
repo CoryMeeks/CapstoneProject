@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent registerIntent = new Intent (Login.this, Venue.class);
+                Intent registerIntent = new Intent (Login.this, Event.class);
 
                 //Temporarily turned to testing page
                 //Intent registerIntent = new Intent (Login.this, Register.class);
@@ -60,7 +60,7 @@ public class Login extends AppCompatActivity {
 
         try {
             Class.forName("net.sourceforge.jtds.jdbc.Driver");
-            String connectionURL = "jdbc:jtds:sqlserver://sql11.ezhostingserver.com;DatabaseName=Msis4363;user=Msis4363;password=Msis4363;";
+            String connectionURL = "jdbc:jtds:sqlserver://sql11.ezhostingserver.com;DatabaseName=Msis4363new;user=Msis4363new;password=Msis4363;";
             con = DriverManager.getConnection(connectionURL);
         } catch (SQLException se) {
             Log.e("SE-ERR", se.getMessage());

@@ -7,39 +7,16 @@
     tools:context="com.example.cory.capstone.Event">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:id="@+id/TopMenuBar"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp">
-
-        <Button
-            android:id="@+id/profile"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/home"
-            android:onClick="onClickShowProfile" />
-
-        <Button
-            android:id="@+id/setings"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/settings"
-            android:onClick="onClickShowSettings" />
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="360dp"
-        android:layout_height="450dp"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="57dp">
+        android:layout_alignParentStart="true">
 
         <ListView
-            android:id="@+id/lvEventsPage"
+            android:id="@+id/lv_event"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
 </RelativeLayout>

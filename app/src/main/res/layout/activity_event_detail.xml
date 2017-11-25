@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.cory.capstone.VenueDetail">
+    tools:context="com.example.cory.capstone.EventDetail">
 
     <ImageView
         android:id="@+id/iv_thumbnail"
@@ -13,7 +13,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
-    <TextView android:id="@+id/tv_venuedetailname"
+    <TextView android:id="@+id/tv_eventdetailname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/iv_thumbnail"
@@ -22,16 +22,16 @@
         android:text=""
         android:textSize="30dp" />
 
-    <TextView android:id="@+id/tv_venuedetailaddress"
+    <TextView android:id="@+id/tv_eventdetailaddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/iv_thumbnail"
-        android:layout_below="@+id/tv_venuedetailname"
+        android:layout_below="@+id/tv_eventdetailname"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:text="" />
 
-    <TextView android:id="@+id/tv_venuedetaildesc"
+    <TextView android:id="@+id/tv_eventdetaildesc"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_below="@id/iv_thumbnail"
@@ -40,5 +40,19 @@
         android:layout_marginTop="10dp"
         android:text=""
         android:textSize="20dp"/>
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        tools:context="com.example.cory.capstone.EventDetail"
+        android:id="@+id/fr_eventgooglemaps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_eventdetaildesc"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
 
 </RelativeLayout>

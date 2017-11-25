@@ -8,7 +8,6 @@ import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,30 +26,30 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static com.example.cory.capstone.Event.EXTRA_EVENT_NAME;
 import static com.example.cory.capstone.Venue.EXTRA_VENUE_NAME;
 
-public class VenueDetailMap extends FragmentActivity implements OnMapReadyCallback {
+public class EventDetail extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private String strvenuedetailaddress;
-    private String value;
-    private String msg;
+
+    String value;
+    String msg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_venue_detail_map);
+        setContentView(R.layout.activity_event_detail);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.fr_venuegooglemaps);
+                .findFragmentById(R.id.fr_eventgooglemaps);
         mapFragment.getMapAsync(this);
 
         //Checks whether intent data got properly sent over
         Bundle extras = getIntent().getExtras();
 
         if(extras != null) {
-            value = extras.getString(EXTRA_VENUE_NAME);
-
+            value = extras.getString(EXTRA_EVENT_NAME);
         } else msg = "Nothing passed";
 
         GetData pullcontent = new GetData();
@@ -78,9 +77,9 @@ public class VenueDetailMap extends FragmentActivity implements OnMapReadyCallba
     }
 
     public class GetData extends AsyncTask<String, String, String> {
-        String strvenuedetailname;
-        String strvenuedetailaddress;
-        String strvenuedetaildesc;
+        String streventdetailname;
+        String streventdetailaddress;
+        String streventdetaildesc;
         Boolean isSuccess = false;
 
         @Override
@@ -95,15 +94,15 @@ public class VenueDetailMap extends FragmentActivity implements OnMapReadyCallba
                 if (con == null) {
                     msg = "Check your Internet connection";
                 } else {
-                    String query = "SELECT colVenueName, colVenueLocation, colVenueDesc FROM tblVenue WHERE colVenueID = '"+value+"';";
+                    String query = "SELECT colEventName, colEventLocation, colEventDesc FROM tblEvent WHERE colEventID = '"+value+"';";
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
 
                     if (rs.next()) {
                         //do something
-                        strvenuedetailname = rs.getString("colVenueName");
-                        strvenuedetailaddress = rs.getString("colVenueLocation");
-                        strvenuedetaildesc = rs.getString("colVenueDesc");
+                        streventdetailname = rs.getString("colEventName");
+                        streventdetailaddress = rs.getString("colEventLocation");
+                        streventdetaildesc = rs.getString("colEventDesc");
 
                         isSuccess = true;
                     } else {
@@ -113,6 +112,8 @@ public class VenueDetailMap extends FragmentActivity implements OnMapReadyCallba
                     con.close();
                 }
             } catch (SQLException se) {
+                isSuccess = false;
+                msg = se.getMessage();
                 Log.e("SE-ERR", se.getMessage());
             } catch (Exception e) {
                 isSuccess = false;
@@ -127,15 +128,15 @@ public class VenueDetailMap extends FragmentActivity implements OnMapReadyCallba
         protected void onPostExecute(String r) {
             if (isSuccess) {
                 //do something
-                TextView venuedetailname = (TextView) findViewById(R.id.tv_venuedetailname);
-                TextView venuedetailaddress = (TextView) findViewById(R.id.tv_venuedetailaddress);
-                TextView venuedetaildesc = (TextView) findViewById(R.id.tv_venuedetaildesc);
+                TextView eventdetailname = (TextView) findViewById(R.id.tv_eventdetailname);
+                TextView eventdetailaddress = (TextView) findViewById(R.id.tv_eventdetailaddress);
+                TextView eventdetaildesc = (TextView) findViewById(R.id.tv_eventdetaildesc);
 
-                venuedetailname.setText(strvenuedetailname);
-                venuedetailaddress.setText(strvenuedetailaddress);
-                venuedetaildesc.setText(strvenuedetaildesc);
+                eventdetailname.setText(streventdetailname);
+                eventdetailaddress.setText(streventdetailaddress);
+                eventdetaildesc.setText(streventdetaildesc);
 
-                onSearch(strvenuedetailaddress);
+                onSearch(streventdetailaddress);
             } else {
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
@@ -154,7 +155,6 @@ public class VenueDetailMap extends FragmentActivity implements OnMapReadyCallba
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.clear();
     }
 
     public void onSearch (String location) {
