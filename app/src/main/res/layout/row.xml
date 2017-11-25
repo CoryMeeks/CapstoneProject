@@ -12,22 +12,25 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
-    <TextView android:id="@+id/tv_venuename"
+    <TextView
+        android:id="@+id/tv_venuename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/iv_thumbnail"
+        android:onClick="onClickVenueDetails"
         android:paddingBottom="15dp"
         android:text="text"
-        android:textSize="20sp"/>
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/tv_description"
+        android:id="@+id/tv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tv_venuename"
-        android:layout_alignBottom="@+id/tv_venuename"
-        android:text="text"
-        android:textSize="16sp"/>
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@id/tv_venuename"
+        android:paddingBottom="15dp"
+        android:text="text" />
 
 </RelativeLayout>

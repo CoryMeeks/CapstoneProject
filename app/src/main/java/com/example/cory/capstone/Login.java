@@ -32,7 +32,10 @@ public class Login extends AppCompatActivity {
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent registerIntent = new Intent (Login.this, Register.class);
+                Intent registerIntent = new Intent (Login.this, Venue.class);
+
+                //Temporarily turned to testing page
+                //Intent registerIntent = new Intent (Login.this, Register.class);
                 Login.this.startActivity((registerIntent));
             }
         });
@@ -135,5 +138,4 @@ public class Login extends AppCompatActivity {
         }
 
     }
-
 }

@@ -8,7 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,36 +21,44 @@ import static com.example.cory.capstone.R.id.lv_venue;
 /**
  * Created by Cory on 11/18/2017.
  */
-/*
-public class CustomAdapter extends ArrayAdapter<String>
-{
-    private Context context;
-    private List<String> strings;
 
-    public void ListViewAdapter(Context context, List<String> strings)
-    {
-        super(context, R.layout.activity_venue, lv_venue);
+public class CustomAdapter extends BaseAdapter {
+    private Context context;
+    private List<RowItem> rowItem;
+
+    //Constructor
+    public CustomAdapter(Context context, List<RowItem> rowItem) {
         this.context = context;
-        this.strings = new ArrayList<String>();
-        this.strings = strings;
+        this.rowItem = rowItem;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public int getCount() {
+        return rowItem.size();
+    }
 
-        View rowView = inflater.inflate(R.layout.row, parent, false);
+    @Override
+    public Object getItem(int position) {
+        return rowItem.get(position);
+    }
 
-        TextView your_first_text_view = (TextView) rowView.findViewById(R.id.tv_venuename);
-        TextView your_second_text_view = (TextView) rowView.findViewById(R.id.tv_description);
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
-        your_first_text_view.setText(strings.get(position));
-        your_second_text_view.setText(strings.get(position)); //Instead of the same value use position + 1, or something appropriate
+    @Override
+    public View getView(int position, View view, ViewGroup viewGroup) {
+        View v = View.inflate(context, R.layout.row, null);
+        TextView tvName = (TextView) v.findViewById(R.id.tv_venuename);
+        TextView tvAddress = (TextView) v.findViewById(R.id.tv_address);
+        //Set text for TextView
+        tvName.setText(rowItem.get(position).getName());
+        tvAddress.setText(rowItem.get(position).getAddress());
 
-        return rowView;
+        //Set Tag for TextView
+        v.setTag(rowItem.get(position).getId());
+
+        return v;
     }
 }
-}
-*/

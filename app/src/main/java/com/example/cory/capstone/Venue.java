@@ -1,51 +1,41 @@
 package com.example.cory.capstone;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.order;
-import static com.example.cory.capstone.R.id.lv_venue;
-
 public class Venue extends AppCompatActivity {
 
-    //Holds the dynamic database driven content
-    private ArrayList<String> content;
-    //Is the bridge between the ListView GUI and the data in the Array
-    private ArrayAdapter<String> contentadapter;
+    static final String EXTRA_VENUE_NAME = "com.example.cory.capstone.EXTRA_VENUE_NAME";
+
+    private ListView lvContent;
+    private List<RowItem> content;
+    private CustomAdapter contentadapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venue);
 
+        lvContent = (ListView) findViewById(R.id.lv_venue);
         content = new ArrayList<>();
-        //Gets dynamic XML from row.xml and the tv_description ID, and passes it to content Array
-        contentadapter = new ArrayAdapter<>(this, R.layout.row, R.id.tv_venuename, content);
-        final ListView lv = (ListView) findViewById(lv_venue);
-        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); //Defines the ListView as dynamic
-        lv.setAdapter(contentadapter); //Defines adapter to use
 
         GetData pullcontent = new GetData();
         pullcontent.execute();
@@ -71,7 +61,7 @@ public class Venue extends AppCompatActivity {
         return con;
     }
 
-    public class GetData extends AsyncTask<String, String, ArrayList<String>> {
+    public class GetData extends AsyncTask<String, String, String> {
         String msg = "";
         Boolean isSuccess = false;
 
@@ -81,13 +71,13 @@ public class Venue extends AppCompatActivity {
         }
 
         @Override
-        protected ArrayList<String> doInBackground(String... params) {
+        protected String doInBackground(String... params) {
             try {
                 Connection con = connectionClass();
                 if (con == null) {
                     msg = "Check your Internet connection";
                 } else {
-                    String query = "SELECT colVenueName, colVenueDesc FROM tblVenue";
+                    String query = "SELECT colVenueID, colVenueName, colVenueLocation, colVenueDesc FROM tblVenue;";
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
 
@@ -95,7 +85,7 @@ public class Venue extends AppCompatActivity {
 
                     if (rs.next()) {
                         while (rs.next()) {
-                            content.add(rs.getString("colVenueDesc"));
+                            content.add(new RowItem(rs.getInt("colVenueID"), rs.getString("colVenueName"), rs.getString("colVenueLocation"), rs.getString("colVenueDesc")));
                         }
                         msg = "Something to display";
                         isSuccess = true;
@@ -113,19 +103,31 @@ public class Venue extends AppCompatActivity {
                 Log.e("E-ERR", e.getMessage());
             }
 
-            return content;
+            return msg;
         }
 
         @Override
-        protected void onPostExecute(ArrayList<String> r) {
+        protected void onPostExecute(String r) {
             if (isSuccess) {
                 //do something
+                contentadapter = new CustomAdapter(getApplicationContext(), content);
+                lvContent.setAdapter(contentadapter);
 
-                Toast.makeText(Venue.this, msg, Toast.LENGTH_SHORT).show();
+                lvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        Intent intent = new Intent(getApplicationContext(), VenueDetailMap.class);
+                        intent.putExtra(EXTRA_VENUE_NAME, view.getTag().toString());
+
+                        if(intent.resolveActivity(getPackageManager()) != null) {
+                            startActivity(intent);
+                        }
+                    }
+                });
+                //Toast.makeText(Venue.this, msg, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(Venue.this, msg, Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 }
