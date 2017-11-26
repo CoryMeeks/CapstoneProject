@@ -27,6 +27,7 @@ import java.util.List;
 
 public class Event extends AppCompatActivity {
 
+    //Key used to pass data to Detail Activity
     static final String EXTRA_EVENT_NAME = "com.example.cory.capstone.EXTRA_EVENT_NAME";
 
     private ListView lvContent;
@@ -45,6 +46,7 @@ public class Event extends AppCompatActivity {
         pullcontent.execute();
     }
 
+    //Connection to database
     @SuppressLint("NewApi")
     public Connection connectionClass() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -65,80 +67,7 @@ public class Event extends AppCompatActivity {
         return con;
     }
 
-    public class GetData extends AsyncTask<String, String, String> {
-        String msg = "";
-        Boolean isSuccess = false;
-
-        @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                Connection con = connectionClass();
-                if (con == null) {
-                    msg = "Check your Internet connection";
-                } else {
-                    String query = "SELECT colEventID, colEventName, colEventLocation, " +
-                            "colEventTime, colEventDesc FROM tblEvent;";
-                    Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery(query);
-
-                    content.clear();
-
-                    if (rs.next()) {
-                        while (rs.next()) {
-                            content.add(new RowItem(rs.getInt("colEventID"),
-                                    rs.getString("colEventName"),
-                                    rs.getString("colEventLocation"),
-                                    rs.getString("colEventTime"),
-                                    rs.getString("colEventDesc")));
-                        }
-                        msg = "Something to display";
-                        isSuccess = true;
-                    } else {
-                        msg = "Nothing to display";
-                    }
-                    stmt.close();
-                    con.close();
-                }
-            } catch (SQLException se) {
-                Log.e("SE-ERR", se.getMessage());
-            } catch (Exception e) {
-                isSuccess = false;
-                msg = e.getMessage();
-                Log.e("E-ERR", e.getMessage());
-            }
-
-            return msg;
-        }
-
-        @Override
-        protected void onPostExecute(String r) {
-            if (isSuccess) {
-                //do something
-                contentadapter = new CustomAdapter(getApplicationContext(), content);
-                lvContent.setAdapter(contentadapter);
-
-                lvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Intent intent = new Intent(getApplicationContext(), EventDetail.class);
-                        intent.putExtra(EXTRA_EVENT_NAME, view.getTag().toString());
-
-                        if(intent.resolveActivity(getPackageManager()) != null) {
-                            startActivity(intent);
-                        }
-                    }
-                });
-            } else {
-                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
+    //Used for dynamic XML generation
     public class RowItem {
         private int id;
         private String name;
@@ -224,6 +153,7 @@ public class Event extends AppCompatActivity {
 
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
+            //Inflates the target layout for dynamic XML and passes to variables
             View v = View.inflate(context, R.layout.event_row, null);
             TextView tvName = (TextView) v.findViewById(R.id.tv_eventname);
             TextView tvType = (TextView) v.findViewById(R.id.tv_eventaddress);
@@ -237,6 +167,81 @@ public class Event extends AppCompatActivity {
             v.setTag(rowItem.get(position).getId());
 
             return v;
+        }
+    }
+
+    //Async process to pull data from the database, and put into List
+    public class GetData extends AsyncTask<String, String, String> {
+        String msg = "";
+        Boolean isSuccess = false;
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                Connection con = connectionClass();
+                if (con == null) {
+                    msg = "Check your Internet connection";
+                } else {
+                    String query = "SELECT colEventID, colEventName, colEventLocation, " +
+                            "colEventTime, colEventDesc FROM tblEvent;";
+                    Statement stmt = con.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+
+                    content.clear();
+
+                    if (rs.next()) {
+                        while (rs.next()) {
+                            content.add(new RowItem(rs.getInt("colEventID"),
+                                    rs.getString("colEventName"),
+                                    rs.getString("colEventLocation"),
+                                    rs.getString("colEventTime"),
+                                    rs.getString("colEventDesc")));
+                        }
+                        isSuccess = true;
+                    } else {
+                        msg = "Nothing to display";
+                    }
+                    stmt.close();
+                    con.close();
+                }
+            } catch (SQLException se) {
+                Log.e("SE-ERR", se.getMessage());
+            } catch (Exception e) {
+                isSuccess = false;
+                msg = e.getMessage();
+                Log.e("E-ERR", e.getMessage());
+            }
+
+            return msg;
+        }
+
+        @Override
+        protected void onPostExecute(String r) {
+            if (isSuccess) {
+                //Connects the adapter to the List
+                contentadapter = new CustomAdapter(getApplicationContext(), content);
+                lvContent.setAdapter(contentadapter);
+
+                //Passes tag (EventID) to the EventDetail activity
+                lvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                        Intent intent = new Intent(getApplicationContext(), EventDetail.class);
+                        intent.putExtra(EXTRA_EVENT_NAME, view.getTag().toString());
+
+                        if(intent.resolveActivity(getPackageManager()) != null) {
+                            startActivity(intent);
+                        }
+                    }
+                });
+            } else {
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

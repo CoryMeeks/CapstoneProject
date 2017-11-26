@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cory.capstone.Profile">
+
+    <ImageView
+        android:id="@+id/iv_profilepic"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:background="@mipmap/ic_launcher"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/iv_profilepic"
+        android:layout_marginTop="30dp"
+        android:text="SAMPLE USERNAME"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/tv_realname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_profilepic"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textSize="20sp"
+        android:text="Testy Testeron"/>
+
+    <TextView
+        android:id="@+id/tv_useremail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_realname"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:text="ttesterson@fakenews.gov"/>
+
+    <ListView
+        android:id="@+id/lv_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_useremail"
+        android:padding="10dp"></ListView>
+
+</RelativeLayout>

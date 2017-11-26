@@ -47,7 +47,9 @@
         <activity android:name=".TalentDetail" />
         <activity
             android:name=".EventDetail"
-            android:label="@string/title_activity_event_detail"></activity>
+            android:label="@string/title_activity_event_detail" />
+        <activity android:name=".Profile" />
+        <activity android:name=".NewsDetail"></activity>
     </application>
 
 </manifest>

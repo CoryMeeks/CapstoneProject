@@ -32,15 +32,13 @@ public class Login extends AppCompatActivity {
         registerLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent registerIntent = new Intent (Login.this, Event.class);
-
-                //Temporarily turned to testing page
-                //Intent registerIntent = new Intent (Login.this, Register.class);
+                Intent registerIntent = new Intent (Login.this, Register.class);
                 Login.this.startActivity((registerIntent));
             }
         });
     }
 
+    //Gets user input text data, passes to check function
     public void onLogin (View v) {
         EditText etUsername = (EditText) findViewById(R.id.etUsername);
         EditText etPassword = (EditText) findViewById(R.id.etPassword);
@@ -52,6 +50,7 @@ public class Login extends AppCompatActivity {
         login.execute(userStr, passStr);
     }
 
+    //Connection to database
     @SuppressLint("NewApi")
     public Connection connectionClass() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -72,6 +71,7 @@ public class Login extends AppCompatActivity {
         return con;
     }
 
+    //Checks whether user input data is valid inside the database
     public class onLoginManager extends AsyncTask<String, String, String> {
         String msg = "";
         Boolean isSuccess = false;

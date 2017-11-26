@@ -1,6 +1,7 @@
 package com.example.cory.capstone;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.StrictMode;
@@ -8,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -132,6 +135,96 @@ public class Venue extends AppCompatActivity {
             } else {
                 Toast.makeText(Venue.this, msg, Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    public class CustomAdapter extends BaseAdapter {
+        private Context context;
+        private List<RowItem> rowItem;
+
+        //Constructor
+        public CustomAdapter(Context context, List<RowItem> rowItem) {
+            this.context = context;
+            this.rowItem = rowItem;
+        }
+
+        @Override
+        public int getCount() {
+            return rowItem.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return rowItem.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup viewGroup) {
+            View v = View.inflate(context, R.layout.row, null);
+            TextView tvName = (TextView) v.findViewById(R.id.tv_venuename);
+            TextView tvAddress = (TextView) v.findViewById(R.id.tv_address);
+            //Set text for TextView
+            tvName.setText(rowItem.get(position).getName());
+            tvAddress.setText(rowItem.get(position).getAddress());
+
+            //Set Tag for TextView
+            v.setTag(rowItem.get(position).getId());
+
+            return v;
+        }
+    }
+
+    public class RowItem {
+        private int id;
+        private String name;
+        private String address;
+        private String description;
+
+        //Constructor
+
+        public RowItem(int id, String name, String address, String description) {
+            this.id = id;
+            this.name = name;
+            this.address = address;
+            this.description = description;
+        }
+
+        //Setters & Getters
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
         }
     }
 }

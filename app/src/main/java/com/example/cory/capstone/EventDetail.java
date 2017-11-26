@@ -40,6 +40,7 @@ public class EventDetail extends FragmentActivity implements OnMapReadyCallback 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fr_eventgooglemaps);
@@ -52,10 +53,12 @@ public class EventDetail extends FragmentActivity implements OnMapReadyCallback 
             value = extras.getString(EXTRA_EVENT_NAME);
         } else msg = "Nothing passed";
 
+        //Generates dynamic XML content
         GetData pullcontent = new GetData();
         pullcontent.execute();
     }
 
+    //Connection to the database
     @SuppressLint("NewApi")
     public Connection connectionClass() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -94,12 +97,13 @@ public class EventDetail extends FragmentActivity implements OnMapReadyCallback 
                 if (con == null) {
                     msg = "Check your Internet connection";
                 } else {
-                    String query = "SELECT colEventName, colEventLocation, colEventDesc FROM tblEvent WHERE colEventID = '"+value+"';";
+                    String query = "SELECT colEventName, colEventLocation, colEventDesc " +
+                            "FROM tblEvent WHERE colEventID = '"+value+"';";
                     Statement stmt = con.createStatement();
                     ResultSet rs = stmt.executeQuery(query);
 
                     if (rs.next()) {
-                        //do something
+                        //Passes query results to variable
                         streventdetailname = rs.getString("colEventName");
                         streventdetailaddress = rs.getString("colEventLocation");
                         streventdetaildesc = rs.getString("colEventDesc");
@@ -113,11 +117,9 @@ public class EventDetail extends FragmentActivity implements OnMapReadyCallback 
                 }
             } catch (SQLException se) {
                 isSuccess = false;
-                msg = se.getMessage();
                 Log.e("SE-ERR", se.getMessage());
             } catch (Exception e) {
                 isSuccess = false;
-                msg = e.getMessage();
                 Log.e("E-ERR", e.getMessage());
             }
 
@@ -154,9 +156,10 @@ public class EventDetail extends FragmentActivity implements OnMapReadyCallback 
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        //Intentionally left blank
     }
 
+    //Converts the address data into geocoder lat lng data and updates the Google Map fragment
     public void onSearch (String location) {
         mMap.clear();
 
