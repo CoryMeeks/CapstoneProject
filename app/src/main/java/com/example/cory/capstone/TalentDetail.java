@@ -28,7 +28,7 @@ public class TalentDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_venue_detail);
+        setContentView(R.layout.activity_talent_detail);
 
         //Checks whether intent data got properly sent over
         Bundle extras = getIntent().getExtras();

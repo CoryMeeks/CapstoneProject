@@ -8,6 +8,7 @@ import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,17 +30,17 @@ import java.util.List;
 import static com.example.cory.capstone.Venue.EXTRA_VENUE_NAME;
 
 public class VenueDetail extends FragmentActivity implements OnMapReadyCallback {
-    private GoogleMap mMap;
 
-    String value;
-    String msg;
+    private GoogleMap mMap;
+    private String strvenuedetailaddress;
+    private String value;
+    private String msg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_venue_detail);
-
-        //Instantiates Google maps data
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fr_venuegooglemaps);
         mapFragment.getMapAsync(this);
@@ -49,12 +50,11 @@ public class VenueDetail extends FragmentActivity implements OnMapReadyCallback 
 
         if(extras != null) {
             value = extras.getString(EXTRA_VENUE_NAME);
+
         } else msg = "Nothing passed";
 
         GetData pullcontent = new GetData();
         pullcontent.execute();
-
-        onMapReady(mMap);
     }
 
     @SuppressLint("NewApi")
@@ -75,28 +75,6 @@ public class VenueDetail extends FragmentActivity implements OnMapReadyCallback 
             Log.e("E-ERR", e.getMessage());
         }
         return con;
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        mMap.clear();
-        TextView location_TF = (TextView) findViewById(R.id.tv_venuedetailaddress); //Instantiates the variable with address data
-        String location = location_TF.getText().toString(); //Converts address data to type String
-        List<Address> addressList = null; //Instantiates an array to store address data
-        if (location != null || !location.equals("")) { //Tests whether List is populated
-            Geocoder geocoder = new Geocoder(this); //Instantiates object Geocoder
-            try {
-                addressList = geocoder.getFromLocationName(location, 1); //Converts address name to latitude, longitude data
-            } catch (IOException e) {
-                e.printStackTrace(); //else export stacktrace
-            }
-            android.location.Address address = addressList.get(0); //Retrieves new lat long data from List into usable variable
-            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude()); //Instantiates LatLng object with location lat long data
-            mMap.addMarker(new MarkerOptions().position(latLng).title(location)); //Drops a pin on the map at given lat long
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng)); //Moves 'camera' to new lat long location
-        }
     }
 
     public class GetData extends AsyncTask<String, String, String> {
@@ -156,9 +134,46 @@ public class VenueDetail extends FragmentActivity implements OnMapReadyCallback 
                 venuedetailname.setText(strvenuedetailname);
                 venuedetailaddress.setText(strvenuedetailaddress);
                 venuedetaildesc.setText(strvenuedetaildesc);
+
+                onSearch(strvenuedetailaddress);
             } else {
-                Toast.makeText(VenueDetail.this, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        mMap.clear();
+    }
+
+    public void onSearch (String location) {
+        mMap.clear();
+
+        List<Address> addressList = null; //Instantiates an array to store address data
+
+        if (location != null || !location.equals("")) { //Tests whether List is populated
+            Geocoder geocoder = new Geocoder(this); //Instantiates object Geocoder
+            try {
+                addressList = geocoder.getFromLocationName(location, 1); //Converts address name to latitude, longitude data
+            } catch (IOException e) {
+                e.printStackTrace(); //else export stacktrace
+            }
+            android.location.Address address = addressList.get(0); //Retrieves new lat long data from List into usable variable
+            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude()); //Instantiates LatLng object with location lat long data
+            mMap.addMarker(new MarkerOptions().position(latLng).title(location)); //Drops a pin on the map at given lat long
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16.0f)); //Moves 'camera' to new lat long location
+
         }
     }
 }

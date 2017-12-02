@@ -123,7 +123,7 @@ public class Venue extends AppCompatActivity {
                 lvContent.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                        Intent intent = new Intent(getApplicationContext(), VenueDetailMap.class);
+                        Intent intent = new Intent(getApplicationContext(), VenueDetail.class);
                         intent.putExtra(EXTRA_VENUE_NAME, view.getTag().toString());
 
                         if(intent.resolveActivity(getPackageManager()) != null) {

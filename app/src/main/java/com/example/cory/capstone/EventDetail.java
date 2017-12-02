@@ -156,7 +156,7 @@ public class EventDetail extends FragmentActivity implements OnMapReadyCallback 
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        //Intentionally left blank
+        mMap = googleMap;
     }
 
     //Converts the address data into geocoder lat lng data and updates the Google Map fragment

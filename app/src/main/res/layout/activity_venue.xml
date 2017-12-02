@@ -6,17 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.cory.capstone.Venue">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
 
-        <ListView
+                <ListView
             android:id="@+id/lv_venue"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </LinearLayout>
+
 </RelativeLayout>
