@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,19 +23,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.cory.capstone.Login.EXTRA_USER_ID;
+
 public class MainActivity extends AppCompatActivity {
 
     //Need to code in social media features to use this function
-    //static final String EXTRA_MAIN_NAME = "com.example.cory.capstone.EXTRA_MAIN_NAME";
+    static final String EXTRA_USER_ID = "com.example.cory.capstone.EXTRA_USER_ID";
 
     private ListView lvContent;
     private List<RowItem> content;
     private CustomAdapter contentadapter;
+    private int value;
+    private String msg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            value = extras.getInt(EXTRA_USER_ID);
+        } else msg = "Nothing passed";
 
         //Sets ListView to the MainActivity ListView and instantiates a new ArrayList
         lvContent = (ListView) findViewById(R.id.lv_main);
@@ -71,6 +79,13 @@ public class MainActivity extends AppCompatActivity {
     //Moves the user through the activities
     public void onClickShowProfile(View v) {
         Intent i = new Intent(getApplicationContext(), Profile.class);
+        i.putExtra(EXTRA_USER_ID, value);
+        startActivity(i);
+    }
+
+    public void onClickLogOut (View v) {
+        Intent i = new Intent(getApplicationContext(), Login.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
     }
 

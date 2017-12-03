@@ -111,12 +111,12 @@ public class TalentDetail extends AppCompatActivity {
         protected void onPostExecute(String r) {
             if (isSuccess) {
                 //do something
-                TextView talentdetailname = (TextView) findViewById(R.id.tv_venuedetailname);
-                TextView talentdetailprice = (TextView) findViewById(R.id.tv_venuedetailaddress);
-                TextView talentdetaildesc = (TextView) findViewById(R.id.tv_venuedetaildesc);
+                TextView talentdetailname = (TextView) findViewById(R.id.tv_talentdetailname);
+                TextView talentdetailprice = (TextView) findViewById(R.id.tv_talentdetailprice);
+                TextView talentdetaildesc = (TextView) findViewById(R.id.tv_talentdetaildesc);
 
                 talentdetailname.setText(strtalentdetailname);
-                talentdetailprice.setText(strtalentdetailprice);
+                talentdetailprice.setText("$"+strtalentdetailprice);
                 talentdetaildesc.setText(strtalentdetaildesc);
             } else {
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();

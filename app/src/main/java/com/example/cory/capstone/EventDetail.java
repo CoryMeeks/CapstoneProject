@@ -27,7 +27,6 @@ import java.sql.Statement;
 import java.util.List;
 
 import static com.example.cory.capstone.Event.EXTRA_EVENT_NAME;
-import static com.example.cory.capstone.Venue.EXTRA_VENUE_NAME;
 
 public class EventDetail extends FragmentActivity implements OnMapReadyCallback {
 

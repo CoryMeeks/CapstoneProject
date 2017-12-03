@@ -2,8 +2,10 @@ package com.example.cory.capstone;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +24,8 @@ import java.sql.Statement;
 import java.util.Arrays;
 
 public class Login extends AppCompatActivity {
+
+    static public String EXTRA_USER_ID = "com.example.cory.capstone.EXTRA_USER_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,7 @@ public class Login extends AppCompatActivity {
     //Checks whether user input data is valid inside the database
     public class onLoginManager extends AsyncTask<String, String, String> {
         String msg = "";
+        int userId;
         Boolean isSuccess = false;
 
         @Override
@@ -85,6 +90,7 @@ public class Login extends AppCompatActivity {
         protected void onPostExecute(String s) {
             if (isSuccess) {
                 Intent intent = new Intent(Login.this, MainActivity.class);
+                intent.putExtra(EXTRA_USER_ID, userId);
                 startActivity(intent);
             } else {
                 Toast.makeText(Login.this, msg, Toast.LENGTH_SHORT).show();
@@ -101,7 +107,6 @@ public class Login extends AppCompatActivity {
                     String query = "SELECT colUserID FROM tblUser WHERE colUserName = '" + params[0] + "' AND colUserPassword = '" + params[1] + "'";
                     PreparedStatement stmt = con.prepareStatement(query);
                     ResultSet rs = stmt.executeQuery();
-                    int userId;
                     String userName = "";
                     if (rs.next()) {
                         userId = rs.getInt("colUserID");

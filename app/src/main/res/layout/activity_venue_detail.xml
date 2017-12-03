@@ -9,50 +9,55 @@
         android:id="@+id/iv_thumbnail"
         android:layout_width="128dp"
         android:layout_height="128dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:background="@mipmap/ic_launcher"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
-    <TextView android:id="@+id/tv_venuedetailname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_thumbnail"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
+    <TextView
+        android:id="@+id/tv_venuedetailaddress"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/tv_venuedetailname"
+        android:layout_marginTop="12dp"
         android:text=""
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/tv_venuedetailname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_thumbnail"
+        android:layout_marginTop="20dp"
+        android:text=""
+        android:textAlignment="center"
         android:textSize="30dp" />
 
-    <TextView android:id="@+id/tv_venuedetailaddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_thumbnail"
-        android:layout_below="@+id/tv_venuedetailname"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:text="" />
-
-    <TextView android:id="@+id/tv_venuedetaildesc"
+    <TextView
+        android:id="@+id/tv_venuedetaildesc"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@id/iv_thumbnail"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_venuedetailaddress"
         android:text=""
-        android:textSize="20dp"/>
+        android:textSize="20dp" />
 
-    <fragment
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        tools:context="com.example.cory.capstone.VenueDetailMap"
-        android:id="@+id/fr_venuegooglemaps"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_venuedetaildesc"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp" />
+        android:layout_below="@+id/tv_venuedetaildesc">
+
+        <fragment
+            android:id="@+id/fr_venuegooglemaps"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+
+            android:layout_alignParentTop="true"
+            tools:context="com.example.cory.capstone.VenueDetailMap" />
+    </RelativeLayout>
 
 </RelativeLayout>

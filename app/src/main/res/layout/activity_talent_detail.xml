@@ -9,36 +9,41 @@
         android:id="@+id/iv_thumbnail"
         android:layout_width="128dp"
         android:layout_height="128dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:background="@mipmap/ic_launcher"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
-    <TextView android:id="@+id/tv_talentdetailname"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_talentdetailname"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_thumbnail"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/iv_thumbnail"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
         android:text=""
         android:textSize="30dp" />
 
-    <TextView android:id="@+id/tv_talentdetailprice"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_talentdetailprice"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_thumbnail"
         android:layout_below="@+id/tv_talentdetailname"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
         android:text="" />
 
-    <TextView android:id="@+id/tv_talentdetaildesc"
+    <TextView
+        android:id="@+id/tv_talentdetaildesc"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@id/iv_thumbnail"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_talentdetailprice"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
         android:text=""
-        android:textSize="20dp"/>
+        android:textSize="20dp" />
 
 </RelativeLayout>

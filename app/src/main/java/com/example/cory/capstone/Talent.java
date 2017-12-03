@@ -227,12 +227,12 @@ public class Talent extends AppCompatActivity {
         public View getView(int position, View view, ViewGroup viewGroup) {
             View v = View.inflate(context, R.layout.talent_row, null);
             TextView tvName = (TextView) v.findViewById(R.id.tv_talentname);
-            TextView tvType = (TextView) v.findViewById(R.id.tv_talenttype);
-            TextView tvPrice = (TextView) v.findViewById(R.id.tv_talentprice);
+            //TextView tvType = (TextView) v.findViewById(R.id.tv_talenttype);
+            //TextView tvPrice = (TextView) v.findViewById(R.id.tv_talentprice);
             //Set text for TextView
             tvName.setText(rowItem.get(position).getName());
-            tvType.setText(rowItem.get(position).getType());
-            tvPrice.setText("$"+String.valueOf(rowItem.get(position).getPrice()));
+            //tvType.setText(rowItem.get(position).getType());
+            //tvPrice.setText("$"+String.valueOf(rowItem.get(position).getPrice()));
 
             //Set Tag for TextView
             v.setTag(rowItem.get(position).getId());

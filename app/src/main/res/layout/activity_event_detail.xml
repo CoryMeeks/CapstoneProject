@@ -9,33 +9,38 @@
         android:id="@+id/iv_thumbnail"
         android:layout_width="128dp"
         android:layout_height="128dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:background="@mipmap/ic_launcher"
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
-    <TextView android:id="@+id/tv_eventdetailname"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_eventdetailname"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_thumbnail"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/iv_thumbnail"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
         android:text=""
+        android:textAlignment="center"
         android:textSize="30dp" />
 
-    <TextView android:id="@+id/tv_eventdetailaddress"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_eventdetailaddress"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_thumbnail"
+        android:layout_alignStart="@+id/tv_eventdetailname"
         android:layout_below="@+id/tv_eventdetailname"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:text="" />
+        android:layout_marginTop="14dp"
+        android:text=""
+        android:textAlignment="center" />
 
     <TextView
         android:id="@+id/tv_eventdetaildesc"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_below="@id/iv_thumbnail"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_eventdetailaddress"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"

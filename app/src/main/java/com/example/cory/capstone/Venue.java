@@ -133,7 +133,7 @@ public class Venue extends AppCompatActivity {
                 });
                 //Toast.makeText(Venue.this, msg, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(Venue.this, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -165,7 +165,7 @@ public class Venue extends AppCompatActivity {
 
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
-            View v = View.inflate(context, R.layout.row, null);
+            View v = View.inflate(context, R.layout.venue_row, null);
             TextView tvName = (TextView) v.findViewById(R.id.tv_venuename);
             TextView tvAddress = (TextView) v.findViewById(R.id.tv_address);
             //Set text for TextView
