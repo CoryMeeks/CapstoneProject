@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cory.capstone.NewVenue">
+
+    <EditText android:id="@+id/et_newvenuename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"/>
+
+    <EditText android:id="@+id/et_newvenueaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/et_newvenuename"/>
+
+    <EditText android:id="@+id/et_newvenuedesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/et_newvenueaddress"/>
+
+    <Button android:id="@+id/bt_submitnewvenue"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/et_newvenuedesc"
+        android:layout_marginTop="50dp"
+        android:onClick="submitNewVenue"
+        android:text="SUBMIT"/>
+
+</RelativeLayout>

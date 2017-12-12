@@ -215,4 +215,14 @@ public class Profile extends AppCompatActivity {
             this.subject = subject;
         }
     }
+
+    public void setNewVenue (View v) {
+        Intent i = new Intent(getApplicationContext(), NewVenue.class);
+        startActivity(i);
+    }
+
+    public void setNewTalent (View v) {
+        Intent i = new Intent(getApplicationContext(), NewTalent.class);
+        startActivity(i);
+    }
 }

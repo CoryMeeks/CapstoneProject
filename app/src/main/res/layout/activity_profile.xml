@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/iv_profilepic"
         android:layout_marginTop="30dp"
-        android:text="SAMPLE USERNAME"
+        android:text=""
         android:textSize="30sp"/>
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textSize="20sp"
-        android:text="Testy Testeron"/>
+        android:text=""/>
 
     <TextView
         android:id="@+id/tv_useremail"
@@ -44,13 +44,30 @@
         android:layout_below="@id/tv_realname"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:text="ttesterson@fakenews.gov"/>
+        android:text=""/>
 
     <ListView
         android:id="@+id/lv_profile"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tv_useremail"
         android:padding="10dp"></ListView>
+
+    <!-- <Button android:id="@+id/bt_newvenue"
+    android:layout_width="300dp"
+    android:layout_height="100dp"
+    android:layout_margin="10dp"
+    android:layout_below="@id/lv_profile"
+        android:onClick="setNewVenue"
+    android:text="Register a Venue"/>
+
+    <Button android:id="@+id/bt_newtalent"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:layout_below="@id/lv_profile"
+        android:layout_toRightOf="@id/bt_newvenue"
+        android:onClick="setNewTalent"
+        android:text="Create an Act"/> -->
 
 </RelativeLayout>
